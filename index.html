@@ -39,12 +39,7 @@
 
       // 播放動畫
       document.addEventListener("click", () => {
-	  fetch("runtime/miku_sample_t04.model3.json")
-		.then(res => res.json())
-		.then(json => model.animator.load(json))
-		.then(clip => {
-		  model.animator.play(clip);
-		});
+		model.animator.play("Tap", Math.floor(Math.random() * 2)); // 隨機播 Tap 動作
 	  });
     });
   </script>
