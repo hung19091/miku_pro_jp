@@ -43,6 +43,7 @@
 
 	// 點擊播放 Tap 動作（放外面）
 	document.addEventListener("click", () => {
+	  console.log(model);
 	  model.animator.play({
 		group: "Tap",
 		index: Math.floor(Math.random() * 2), // 兩個 Tap 動作中隨機選一個
