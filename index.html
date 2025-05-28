@@ -38,8 +38,14 @@
       });
 
       // 播放動畫
-      //model.motion("runtime/motion/miku_01.motion3.json")?.start();
-	  model.animator.play("runtime/motion/miku_01.motion3.json");
+      document.addEventListener("click", () => {
+	  fetch("runtime/motion/miku_01.motion3.json")
+		.then(res => res.json())
+		.then(json => model.animator.load(json))
+		.then(clip => {
+		  model.animator.play(clip);
+		});
+	  });
     });
   </script>
 </body>
