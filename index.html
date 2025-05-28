@@ -21,27 +21,32 @@
       transparent: true
     });
 
-    PIXI.live2d.Live2DModel.from("runtime/miku_sample_t04.model3.json").then(model => {
-      model.scale.set(0.3);
-      model.x = app.screen.width / 2;
-      model.y = app.screen.height * 0.4;
-      app.stage.addChild(model);
+    let model; // <- 提到外面
 
-      // 滑鼠眼神追蹤
-      window.addEventListener("mousemove", e => {
-        const x = (e.clientX / window.innerWidth) * 2 - 1;
-        const y = (e.clientY / window.innerHeight) * 2 - 1;
-        model.internalModel.coreModel.setParameterValueById("ParamAngleX", x * 30);
-        model.internalModel.coreModel.setParameterValueById("ParamAngleY", y * 30);
-        model.internalModel.coreModel.setParameterValueById("ParamEyeBallX", x);
-        model.internalModel.coreModel.setParameterValueById("ParamEyeBallY", y);
-      });
+	PIXI.live2d.Live2DModel.from("runtime/miku_sample_t04.model3.json").then(m => {
+	  model = m; // 存起來才能外部使用
+	  model.scale.set(0.3);
+	  model.x = app.screen.width / 2;
+	  model.y = app.screen.height * 0.4;
+	  app.stage.addChild(model);
 
-      // 播放動畫
-      document.addEventListener("click", () => {
-		model.animator.play("Tap", Math.floor(Math.random() * 2)); // 隨機播 Tap 動作
+	  // 滑鼠追蹤
+	  window.addEventListener("mousemove", e => {
+		const x = (e.clientX / window.innerWidth) * 2 - 1;
+		const y = (e.clientY / window.innerHeight) * 2 - 1;
+		model.internalModel.coreModel.setParameterValueById("ParamAngleX", x * 30);
+		model.internalModel.coreModel.setParameterValueById("ParamAngleY", y * 30);
+		model.internalModel.coreModel.setParameterValueById("ParamEyeBallX", x);
+		model.internalModel.coreModel.setParameterValueById("ParamEyeBallY", y);
 	  });
-    });
+	});
+
+	// 點擊播放 Tap 動作（放外面）
+	document.addEventListener("click", () => {
+	  if (model?.animator) {
+		model.animator.play("Tap", Math.floor(Math.random() * 2));
+	  }
+	});
   </script>
 </body>
 </html>
