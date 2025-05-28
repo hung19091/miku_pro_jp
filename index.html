@@ -24,7 +24,7 @@
     PIXI.live2d.Live2DModel.from("runtime/miku_sample_t04.model3.json").then(model => {
       model.scale.set(0.3);
       model.x = app.screen.width / 2;
-      model.y = app.screen.height * 0.6;
+      model.y = app.screen.height * 0.4;
       app.stage.addChild(model);
 
       // 滑鼠眼神追蹤
@@ -38,7 +38,7 @@
       });
 
       // 播放動畫
-      model.motion("motion/miku_01.motion3.json")?.start();
+      model.motion("runtime/motion/miku_01.motion3.json")?.start();
     });
   </script>
 </body>
