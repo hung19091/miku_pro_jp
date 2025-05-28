@@ -39,7 +39,7 @@
 
       // 播放動畫
       document.addEventListener("click", () => {
-	  fetch("runtime/motion/miku_01.motion3.json")
+	  fetch("runtime/miku_sample_t04.model3.json")
 		.then(res => res.json())
 		.then(json => model.animator.load(json))
 		.then(clip => {
