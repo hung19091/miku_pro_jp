@@ -43,7 +43,7 @@
 
 	// 點擊播放 Tap 動作（放外面）
 	document.addEventListener("click", () => {
-	  model.animator.play("FlickUp", 1);
+	  model.motion("Tap").start();
 	});
   </script>
 </body>
