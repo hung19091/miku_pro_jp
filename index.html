@@ -34,11 +34,7 @@
       app.stage.addChild(model);
 
       // 播放 Idle 動作（第一個）
-      model.animator.play({
-        group: "Idle",
-        index: 0,
-        loop: true
-      });
+      model.motion("Idle", 0).start();
 
       // 滑鼠控制眼神
       window.addEventListener("mousemove", e => {
