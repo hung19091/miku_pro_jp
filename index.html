@@ -9,46 +9,44 @@
   </style>
 </head>
 <body>
-  <!-- 必要套件 -->
   <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
   <script src="script/live2dcubismcore.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.8/dist/browser/pixi.min.js"></script>
+  <script src="https://unpkg.com/pixi.js@6.5.8/dist/browser/pixi.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/index.min.js"></script>
-
   <script>
-    // 建立 Pixi 應用
     const app = new PIXI.Application({
       view: document.body.appendChild(document.createElement("canvas")),
       width: window.innerWidth,
       height: window.innerHeight,
-      transparent: true,
+      transparent: true
     });
 
-    const { Live2DModel } = PIXI.live2d;
+    let model; // <- 提到外面
 
-    // 載入 Live2D 模型
-    Live2DModel.from("runtime/miku_sample_t04.model3.json").then(model => {
-      model.scale.set(0.3);
-      model.x = app.screen.width / 2;
-      model.y = app.screen.height * 0.4;
-      app.stage.addChild(model);
+	PIXI.live2d.Live2DModel.from("runtime/miku_sample_t04.model3.json").then(m => {
+	  model = m; // 存起來才能外部使用
+	  model.scale.set(0.3);
+	  model.x = app.screen.width / 2;
+	  model.y = app.screen.height * 0.4;
+	  app.stage.addChild(model);
 
-      // 播放 Idle 動作（第一個）
-      model.motion("tap");
+	  // 滑鼠追蹤
+	  window.addEventListener("mousemove", e => {
+		const x = (e.clientX / window.innerWidth) * 2 - 1;
+		const y = (e.clientY / window.innerHeight) * 2 - 1;
+		model.internalModel.coreModel.setParameterValueById("ParamAngleX", x * 30);
+		model.internalModel.coreModel.setParameterValueById("ParamAngleY", y * 30);
+		model.internalModel.coreModel.setParameterValueById("ParamEyeBallX", x);
+		model.internalModel.coreModel.setParameterValueById("ParamEyeBallY", y);
+	  });
+	});
+
+	// 點擊播放 Tap 動作（放外面）
+	document.addEventListener("click", () => {
+	  console.log(model);
+	  model.motion("tap");
 	  model.expression();
-
-      // 滑鼠控制眼神
-      window.addEventListener("mousemove", e => {
-        const x = (e.clientX / window.innerWidth) * 2 - 1;
-        const y = (e.clientY / window.innerHeight) * 2 - 1;
-
-        const core = model.internalModel.coreModel;
-        core.setParameterValueById("ParamAngleX", x * 30);
-        core.setParameterValueById("ParamAngleY", y * 30);
-        core.setParameterValueById("ParamEyeBallX", x);
-        core.setParameterValueById("ParamEyeBallY", y);
-      });
-    });
+	});
   </script>
 </body>
 </html>
