@@ -34,7 +34,8 @@
       app.stage.addChild(model);
 
       // 播放 Idle 動作（第一個）
-      model.motion("Idle", 0).start();
+      model.motion("tap");
+	  model.expression();
 
       // 滑鼠控制眼神
       window.addEventListener("mousemove", e => {
